@@ -12,7 +12,7 @@ export default async function Marque() {
       <MarqueeText
         duration={18}
         direction="right"
-        loop={true}
+        // loop={true}
         className="flex gap-3"
       >
         <div className="text mx-2  gap-0.5">
