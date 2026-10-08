@@ -1,8 +1,9 @@
 import { getAllData } from "@/app/page";
 import Link from "next/link";
-
+import logo from "@/app/img/logo-icon.png";
 import Marque from "./marque";
 import BanglaDate from "../banglaDate/banglaDate";
+import Image from "next/image";
 // import "MarqueeText/styles.css";
 
 export default async function NavItems() {
@@ -18,33 +19,45 @@ export default async function NavItems() {
   };
   const getData = await getAllData();
   const navItems = [
-    ...new Set(getData.map((item: any) => item.categoryNameBn)),
-  ].map((category) => ({
-    name: category,
-    icon: categoryIcons[category] || "📦",
-  }));
-
-  const NavLink = [
-    ...navItems.map((item: any) => (
-      <li key={item.name}>
-        <Link href={`#${item.name}`}>
-          {item.icon} {item.name}
-        </Link>
-      </li>
-    )),
+    ...new Map(
+      getData.map((item: any) => [
+        item.category,
+        {
+          name: item.categoryNameBn,
+          slug: item.category,
+          icon: item.categoryIcon || "📦",
+        },
+      ]),
+    ).values(),
   ];
+  console.log("nav", navItems);
+
+  // const NavLink = [
+  //   ...navItems.map((item: any) => (
+  //     <li key={item.name}>
+  //       <Link href={`#${item.name}`}>
+  //         {item.icon} {item.name}
+  //       </Link>
+  //     </li>
+  //   )),
+  // ];
 
   return (
     <main className="bg-white">
       <div className="container mx-auto">
         <div className="flex  justify-between items-center p-4">
-          <div className="logo">
-            <h1 className="text-2xl font-bold">
-              <Link href={"/"}>BazarDhor</Link>
-            </h1>
-            <p>
-              <BanglaDate />
-            </p>
+          <div className="logo flex items-center gap-5">
+            <span>
+              <Image src={logo} width={30} className="text-2xl" alt="logo" />
+            </span>
+            <div>
+              <h1 className="text-2xl font-bold">
+                <Link href={"/"}>BazarDhor</Link>
+              </h1>
+              <p>
+                <BanglaDate />
+              </p>
+            </div>
           </div>
           <div className="right-content">
             <span className="flex gap-4">
@@ -68,7 +81,7 @@ export default async function NavItems() {
             {navItems.map((item: any) => (
               <Link
                 key={item.name}
-                href={`#${item.name}`}
+                href={`/category/${item.slug}`}
                 className="px-4 py-2 hover:bg-gray-300 rounded"
               >
                 {item.icon} {item.name}
