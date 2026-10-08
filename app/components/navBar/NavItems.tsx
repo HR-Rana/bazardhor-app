@@ -39,7 +39,9 @@ export default async function NavItems() {
       <div className="container mx-auto">
         <div className="flex  justify-between items-center p-4">
           <div className="logo">
-            <h1 className="text-2xl font-bold">BazarDhor</h1>
+            <h1 className="text-2xl font-bold">
+              <Link href={"/"}>BazarDhor</Link>
+            </h1>
             <p>
               <BanglaDate />
             </p>
