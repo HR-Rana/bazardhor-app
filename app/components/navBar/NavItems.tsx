@@ -2,18 +2,10 @@ import { getAllData } from "@/app/page";
 import Link from "next/link";
 
 import Marque from "./marque";
+import BanglaDate from "../banglaDate/banglaDate";
 // import "MarqueeText/styles.css";
 
 export default async function NavItems() {
-  const date = new Date();
-
-  const banglaDate = new Intl.DateTimeFormat("bn-BD", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  }).format(date);
-
   const categoryIcons: Record<string, string> = {
     চাল: "🌾",
     ডাল: "🫘",
@@ -31,7 +23,7 @@ export default async function NavItems() {
     name: category,
     icon: categoryIcons[category] || "📦",
   }));
-  console.log(navItems);
+
   const NavLink = [
     ...navItems.map((item: any) => (
       <li key={item.name}>
@@ -48,17 +40,19 @@ export default async function NavItems() {
         <div className="flex  justify-between items-center p-4">
           <div className="logo">
             <h1 className="text-2xl font-bold">BazarDhor</h1>
-            <p>{banglaDate}</p>
+            <p>
+              <BanglaDate />
+            </p>
           </div>
           <div className="right-content">
-            <span>
+            <span className="flex gap-4">
               <Link className="text-lg font-semibold" href="/login">
-                <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                <button className="bg-orange-800 text-white px-4 py-2 rounded hover:bg-orange-600">
                   Login
                 </button>
               </Link>
               <Link className="text-lg font-semibold " href="/register">
-                <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                <button className="bg-orange-700 text-white px-4 py-2 rounded hover:bg-orange-600">
                   {" "}
                   Sign Up
                 </button>

@@ -18,7 +18,7 @@ export default async function Marque() {
         <div className="text mx-2  gap-0.5">
           {product.map((item: any) => (
             <span
-              key={item._id}
+              key={item.id}
               className=" border-gray-200  px-2 py-1 border-r-2"
             >
               <span>{item.categoryIcon}</span>
