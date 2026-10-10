@@ -59,17 +59,18 @@ export default async function NavItems() {
               </p>
             </div>
           </div>
-          <div className="right-content">
+          <div className="right-content flex gap-3 ">
             <span className="flex gap-4">
               <Link className="text-lg font-semibold" href="/login">
                 <button className="bg-orange-800 text-white px-4 py-2 rounded hover:bg-orange-600">
                   Login
                 </button>
               </Link>
-              <Link className="text-lg font-semibold " href="/register">
-                <button className="bg-orange-700 text-white px-4 py-2 rounded hover:bg-orange-600">
-                  {" "}
-                  Sign Up
+            </span>
+            <span className="flex gap-4">
+              <Link className="text-lg font-semibold" href="/registration">
+                <button className="bg-orange-800 text-white px-4 py-2 rounded hover:bg-orange-600">
+                  Sin Up
                 </button>
               </Link>
             </span>

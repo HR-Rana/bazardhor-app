@@ -66,7 +66,7 @@ export default function PriceExplain({ data }: propsType) {
                     <td>{items.division} টাকা</td>
                     <td>{items.min} টাকা</td>
                     <td>{items.max} টাকা</td>
-                    <td>{Math.round((lowPrice + highPrice) / 2)} টাকা</td>
+                    <td>{Math.round((items.min + items.max) / 2)} টাকা</td>
                   </tr>
                 );
               })}

@@ -1,4 +1,5 @@
 import { getAllData } from "@/app/page";
+import { ProductType } from "@/app/types/ProductTypes";
 import React from "react";
 
 export default async function CategoryPage({ params }) {
@@ -41,8 +42,8 @@ export default async function CategoryPage({ params }) {
         <h4 className="text-gray-600 font-semibold text-md">
           মোট {categoryFind.length} টি পণ্য দেখানো হচ্ছে
         </h4>
-        <div className="category-caontainer grid grid-cols-3 gap-4 my-7">
-          {categoryFind.map((items) => (
+        <div className="category-caontainer grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 my-7">
+          {categoryFind.map((items: ProductType) => (
             <div key={items.id} className="bg-white rounded-2xl py-7 px-5">
               <div className="category-title-card flex items-center gap-3">
                 <span className="text-3xl">{items.categoryIcon}</span>
