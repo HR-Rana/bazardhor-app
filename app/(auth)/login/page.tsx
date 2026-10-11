@@ -1,5 +1,6 @@
 "use client";
 
+import { authClient } from "@/app/lib/auth-client";
 import { Check } from "@gravity-ui/icons";
 import {
   Button,
@@ -11,8 +12,58 @@ import {
   TextField,
 } from "@heroui/react";
 import Link from "next/link";
+import { toast } from "react-toastify";
 
 export default function LoginPage() {
+  const hanldeSignInuser = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+
+    const email = String(formData.get("email") ?? "");
+    const password = String(formData.get("password") ?? "");
+
+    try {
+      const { data, error } = await authClient.signIn.email({
+        email,
+        password,
+        callbackURL: "/",
+      });
+      console.log(data);
+
+      if (error) {
+        toast.error(error.message);
+        return;
+      }
+
+      if (data) {
+        toast.success("Login successful!");
+        window.location.href = "/profile";
+      }
+    } catch (error) {
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Login failed. Please try again.",
+      );
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    try {
+      const result = await authClient.signIn.social({
+        provider: "google",
+      });
+
+      if (result) {
+        toast.success("google signin successfull");
+      }
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : "Something went wrong!",
+      );
+    }
+  };
+
   return (
     <main>
       <div className="page-title w-1/2 mx-auto text-center mt-10">
@@ -25,7 +76,7 @@ export default function LoginPage() {
         <Form
           className="flex  w-full flex-col text-black gap-8"
           render={(props) => <form {...props} data-custom="foo" />}
-          onSubmit={(e) => console.log("it's working")}
+          onSubmit={hanldeSignInuser}
         >
           <TextField
             isRequired
@@ -72,7 +123,7 @@ export default function LoginPage() {
                 "min-w-full rounded-sm text-lg font-bold py-7 text-center bg-green-700"
               }
             >
-              অ্যাকাউন্ট তৈরি করুন
+              সাইন ইন
             </Button>
           </div>
         </Form>
@@ -83,7 +134,10 @@ export default function LoginPage() {
         </div>
         <div className="others-option text-center">
           <div className="flex gap-2 mx-auto justify-center my-5">
-            <Button className="bg-transparent rounded-lg text-black  border-[1px] border-gray-500 font-semibold">
+            <Button
+              onClick={handleGoogleSignIn}
+              className="bg-transparent rounded-lg text-black  border-[1px] border-gray-500 font-semibold"
+            >
               <svg
                 viewBox="0 0 24 24"
                 width="1em"

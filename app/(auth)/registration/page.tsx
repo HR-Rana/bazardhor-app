@@ -16,10 +16,11 @@ import { useRouter } from "next/navigation";
 
 export default function RegistrationPage() {
   const router = useRouter();
-  const onSubmit = async (e: React.SubmitEvent<HTMLElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const formData = new FormData(e.target);
+    const formData = new FormData(e.currentTarget);
+
     const data = Object.fromEntries(formData);
     if (data.password !== data.confirmPassword) {
       toast.error("পাসওয়ার্ড দুটি মিলছে না");

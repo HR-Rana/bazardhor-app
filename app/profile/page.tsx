@@ -1,6 +1,28 @@
+"use client";
 import Image from "next/image";
+import { toast } from "react-toastify";
+import { authClient } from "../lib/auth-client";
+import { useRouter } from "next/router";
 
 export default function ProfilePage() {
+  const HandleSignoUt = async () => {
+    try {
+      const result = await authClient.signOut();
+
+      if (result.error) {
+        toast.error(result.error.message);
+        return;
+      }
+
+      toast.success("User Sign Out successfully..!");
+      window.location.href = "/";
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : "Something went wrong!",
+      );
+    }
+  };
+
   return (
     <main className="container mx-auto">
       <div className="py-10">
@@ -41,7 +63,10 @@ export default function ProfilePage() {
               </div>
             </div>
             <div className="right flex items-center">
-              <button className="text-red-500 px-3 py-2 cursor-pointer font-semibold">
+              <button
+                className="text-red-500 px-3 py-2 cursor-pointer font-semibold"
+                onClick={HandleSignoUt}
+              >
                 ↩ সাইন আউট
               </button>
             </div>

@@ -1,11 +1,22 @@
 import React from "react";
 import { ProductType } from "../types/ProductTypes";
 
-interface propsType {
-  data: ProductType;
+interface MarketType {
+  market: string;
+  division: string;
+  min: number;
+  max: number;
+}
+interface PriceExplainData {
+  name: string;
+  markets: MarketType[];
 }
 
-export default function PriceExplain({ data }: propsType) {
+interface PropsType {
+  data: PriceExplainData;
+}
+
+export default function PriceExplain({ data }: PropsType) {
   const market = data.markets;
   console.log(market);
 

@@ -3,13 +3,16 @@
 import { useState } from "react";
 import Link from "next/link";
 import ProfileIcon from "../profileIcon/ProfileIcon";
+import { authClient } from "@/app/lib/auth-client";
+import { userAc } from "better-auth/plugins/admin/access";
 
 export default function AuthNav() {
-  const [profile, setProfile] = useState(false);
+  const { data: seission } = authClient.useSession();
+  const user = seission?.user;
 
   return (
     <>
-      {profile ? (
+      {user ? (
         <ProfileIcon />
       ) : (
         <div className="right-content flex gap-3">

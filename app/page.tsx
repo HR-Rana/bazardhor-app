@@ -9,7 +9,7 @@ export const getAllData = async () => {
     "https://api.abcz.workers.dev/api/bazardor/products",
     {
       next: {
-        revalidate: 300,
+        revalidate: 60,
       },
     },
   );
@@ -23,7 +23,9 @@ export default async function Home() {
         <HeroSection />
       </section>
       <section>
-        <PriceBased />
+        <Suspense fallback={<p>পণ্যের তথ্য লোড হচ্ছে...</p>}>
+          <PriceBased />
+        </Suspense>
       </section>
     </main>
   );

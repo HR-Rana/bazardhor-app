@@ -8,7 +8,7 @@ interface BanglaDateProps {
 }
 
 export default function BanglaDate() {
-  const [date, setDate] = useState();
+  const [date, setDate] = React.useState<string>("");
   useEffect(() => {
     const date = new Date();
     const banglaDate = new Intl.DateTimeFormat("bn-BD", {

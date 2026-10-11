@@ -5,7 +5,11 @@ import React from "react";
 export default async function PriceBased() {
   const productData = await fetch(
     "https://api.abcz.workers.dev/api/bazardor/products",
-    { cache: "no-store" },
+    {
+      next: {
+        revalidate: 300,
+      },
+    },
   );
   const data = await productData.json();
 

@@ -1,18 +1,45 @@
+import { Suspense } from "react";
 import { getAllData } from "@/app/page";
 import { ProductType } from "@/app/types/ProductTypes";
-import React from "react";
 
-export default async function CategoryPage({ params }) {
+interface CategoryPageProps {
+  params: Promise<{
+    name: string;
+  }>;
+}
+
+export default function CategoryPage({ params }: CategoryPageProps) {
+  return (
+    <Suspense
+      fallback={
+        <div className="container mx-auto p-7">
+          ক্যাটাগরির তথ্য লোড হচ্ছে...
+        </div>
+      }
+    >
+      <CategoryContent params={params} />
+    </Suspense>
+  );
+}
+
+async function CategoryContent({ params }: CategoryPageProps) {
   const { name } = await params;
 
-  const data = await getAllData();
-  const categoryName = data.find((data) => data.category === name);
-  const categoryFind = data.filter((items) => items.category === name);
-  console.log(categoryName);
+  const data: ProductType[] = await getAllData();
+  const categoryName = data.find((item) => item.category === name);
+  const categoryFind = data.filter((item) => item.category === name);
+
+  if (!categoryName) {
+    return (
+      <div className="container mx-auto p-7">
+        <h2 className="text-xl font-bold">কোনো পণ্য পাওয়া যায়নি</h2>
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto">
-      <section className="p-7 bg-white rounded-2xl  my-5">
+      <section className="p-7 bg-white rounded-2xl my-5">
         <div className="category-title-card flex items-center gap-3">
           <span className="text-3xl">{categoryName.categoryIcon}</span>
           <div>
@@ -31,9 +58,9 @@ export default async function CategoryPage({ params }) {
         <div className="flex gap-2">
           <p>সাজান</p>
           <details>
-            <summary>ডিফল্ট </summary>
-            <option value="low-to-high"> দাম: কম থেকে বেশি </option>
-            <option value="high-to-low"> দাম: বেশি থেকে কম </option>
+            <summary>ডিফল্ট</summary>
+            <option value="low-to-high">দাম: কম থেকে বেশি</option>
+            <option value="high-to-low">দাম: বেশি থেকে কম</option>
           </details>
         </div>
       </section>
@@ -42,9 +69,13 @@ export default async function CategoryPage({ params }) {
         <h4 className="text-gray-600 font-semibold text-md">
           মোট {categoryFind.length} টি পণ্য দেখানো হচ্ছে
         </h4>
+
         <div className="category-caontainer grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 my-7">
           {categoryFind.map((items: ProductType) => (
-            <div key={items.id} className="bg-white rounded-2xl py-7 px-5">
+            <div
+              key={String(items.id)}
+              className="bg-white rounded-2xl py-7 px-5"
+            >
               <div className="category-title-card flex items-center gap-3">
                 <span className="text-3xl">{items.categoryIcon}</span>
                 <div>
@@ -60,6 +91,7 @@ export default async function CategoryPage({ params }) {
                     {items.today} <span className="text-sm">টাকা</span>
                   </h4>
                 </div>
+
                 <div className="flex items-center">
                   <p className="text-red-600 bg-gray-200 rounded-full p-2 font-semibold">
                     ▲ {items.change.pct} %
