@@ -13,15 +13,12 @@ if (!connectionString) {
 const client = new MongoClient(connectionString);
 const db = client.db("users");
 
-console.log("Starting MongoDB connection...");
-
 try {
   await client.connect();
   await db.command({ ping: 1 });
 
   console.log("✅ MongoDB connected successfully!");
 } catch (error) {
-  console.error("❌ MongoDB connection failed:", error);
   throw error;
 }
 
