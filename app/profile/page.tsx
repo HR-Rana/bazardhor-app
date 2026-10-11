@@ -1,42 +1,67 @@
 import Image from "next/image";
-import React from "react";
 
 export default function ProfilePage() {
   return (
-    <main>
-      <div>
-        <div className="profile-container">
-          <div className="title mb-5">
-            <h3>আমার প্রোফাইল</h3>
-            <p>আপনার অ্যাকাউন্টের তথ্য এখানে দেখুন।</p>
+    <main className="container mx-auto">
+      <div className="py-10">
+        <div className="profile-container w-[60%] mx-auto">
+          <div className="title mb-5 my-10">
+            <h3 className="text-2xl font-bold">আমার প্রোফাইল</h3>
+            <p className="text-gray-500 font-semibold mt-2">
+              আপনার অ্যাকাউন্টের তথ্য এখানে দেখুন।
+            </p>
           </div>
-          <div className="profile-info">
-            <div className="left">
+          <div className="profile-info bg-white py-7 px-6 rounded-lg flex justify-between">
+            <div className="left flex items-center ">
               <span>
-                <Image src={""} alt="user-image"></Image>
+                {" "}
+                <svg
+                  aria-hidden="true"
+                  fill="none"
+                  focusable="false"
+                  height={40}
+                  role="presentation"
+                  viewBox="0 0 24 24"
+                  width={60}
+                  stroke="currentColor"
+                  strokeWidth={1.5}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+                {/* <Image src={""} alt="user-image"></Image> */}
               </span>
               <div>
-                <h3>Name of User</h3>
-                <p>rezwanahmed@gmail.com</p>
+                <h3 className="text-[24px] font-bold ">Name of User</h3>
+                <p className="text-[14px] font-semibold text-gray-500">
+                  rezwanahmed@gmail.com
+                </p>
               </div>
             </div>
-            <div className="right">
-              <button className="text-red-500 px-3 py-2">↩ সাইন আউট</button>
+            <div className="right flex items-center">
+              <button className="text-red-500 px-3 py-2 cursor-pointer font-semibold">
+                ↩ সাইন আউট
+              </button>
             </div>
           </div>
-          <div className="profile-update">
+          <div className="profile-update bg-white py-10 px-8 rounded-lg my-10">
             <span>
-              <h4>তথ্য</h4>
+              <h4 className="text-xl font-semibold py-4">তথ্য</h4>
             </span>
             <div className="input block gap-4">
-              <form action="" className="block ">
-                <label htmlFor="">নাম </label>
+              <form action="" className=" shadow-none bg-white py-7 px-5">
+                <label htmlFor="" className="font-semibold text-lg">
+                  নাম{" "}
+                </label>
+                <br />
                 <input
-                  className="border-1 border-gray-600 py-1 rounded-sm px-3"
+                  className="border-1 w-full my-3 py-3 rounded-lg border-gray-600  px-3"
                   type="text"
                   placeholder=""
                 />
-                <button className="text-white bg-green-500 rounded-lg w-full">
+                <button className="text-white text-lg font-semibold cursor-pointer py-3 bg-green-600 rounded-lg w-full">
                   আপডেট{" "}
                 </button>
               </form>

@@ -10,9 +10,7 @@ interface paramsProps {
 export default async function DetailPage({ params }: paramsProps) {
   const { id } = await params;
 
-  const products = await fetch(
-    "https://api.api-store.workers.dev/api/bazardor/products",
-  );
+  const products = await fetch(" https://api.abcz.workers.dev/api/bazardor");
   const res = await products.json();
   const data = res.find((item) => item.id === Number(id));
 

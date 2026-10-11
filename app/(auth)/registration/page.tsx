@@ -1,6 +1,6 @@
 "use client";
 
-import { Check } from "@gravity-ui/icons";
+import { authClient } from "@/app/lib/auth-client";
 import {
   Button,
   Description,
@@ -11,8 +11,46 @@ import {
   TextField,
 } from "@heroui/react";
 import Link from "next/link";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 export default function RegistrationPage() {
+  const router = useRouter();
+  const onSubmit = async (e: React.SubmitEvent<HTMLElement>) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData);
+    if (data.password !== data.confirmPassword) {
+      toast.error("পাসওয়ার্ড দুটি মিলছে না");
+      return;
+    }
+
+    try {
+      const result = await authClient.signUp.email({
+        name: data.name as string,
+        email: data.email as string,
+        password: data.password as string,
+      });
+
+      if (result.error) {
+        toast.error(result.error.message || "User create failed!");
+        return;
+      }
+
+      if (!result.data) {
+        toast.error("User create failed!");
+        return;
+      }
+      toast.success("User created successfully!");
+      router.push("/");
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : "Something went wrong!",
+      );
+    }
+  };
+
   return (
     <main>
       <div className="page-title w-1/2 mx-auto text-center mt-10">
@@ -25,19 +63,9 @@ export default function RegistrationPage() {
         <Form
           className="flex  w-full flex-col text-black gap-8"
           render={(props) => <form {...props} data-custom="foo" />}
-          onSubmit={(e) => console.log("it's working")}
+          onSubmit={onSubmit}
         >
-          <TextField
-            isRequired
-            name="name"
-            type="text"
-            validate={(value) => {
-              if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
-                return "Please enter a Valid name";
-              }
-              return null;
-            }}
-          >
+          <TextField isRequired name="name" type="text">
             <Label className="text-black text-lg">নাম</Label>
             <Input className={"text-lg"} placeholder="যেমন: রহিম উদ্দিন" />
             <FieldError />
@@ -82,7 +110,7 @@ export default function RegistrationPage() {
           <TextField
             isRequired
             minLength={8}
-            name="password"
+            name="confirmPassword"
             type="password"
             validate={(value) => {
               if (value.length < 8) {
@@ -166,9 +194,9 @@ export default function RegistrationPage() {
           </div>
 
           <p className="text-center">
-            অ্যাকাউন্ট নেই?{" "}
+            অ্যাকাউন্ট আছে?{" "}
             <Link href={"/login"} className=" font-semibold text-green-600">
-              সাইন আপ করুন
+              সাইন ইন করুন
             </Link>
           </p>
         </div>

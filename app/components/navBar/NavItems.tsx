@@ -4,6 +4,8 @@ import logo from "@/app/img/logo-icon.png";
 import Marque from "./marque";
 import BanglaDate from "../banglaDate/banglaDate";
 import Image from "next/image";
+import ProfileIcon from "../profileIcon/ProfileIcon";
+import AuthNav from "./AuthNav";
 // import "MarqueeText/styles.css";
 
 export default async function NavItems() {
@@ -20,7 +22,7 @@ export default async function NavItems() {
   const getData = await getAllData();
   const navItems = [
     ...new Map(
-      getData.map((item: any) => [
+      getData?.map((item: any) => [
         item.category,
         {
           name: item.categoryNameBn,
@@ -30,17 +32,6 @@ export default async function NavItems() {
       ]),
     ).values(),
   ];
-  console.log("nav", navItems);
-
-  // const NavLink = [
-  //   ...navItems.map((item: any) => (
-  //     <li key={item.name}>
-  //       <Link href={`#${item.name}`}>
-  //         {item.icon} {item.name}
-  //       </Link>
-  //     </li>
-  //   )),
-  // ];
 
   return (
     <main className="bg-white">
@@ -59,27 +50,15 @@ export default async function NavItems() {
               </p>
             </div>
           </div>
-          <div className="right-content flex gap-3 ">
-            <span className="flex gap-4">
-              <Link className="text-lg font-semibold" href="/login">
-                <button className="bg-orange-800 text-white px-4 py-2 rounded hover:bg-orange-600">
-                  Login
-                </button>
-              </Link>
-            </span>
-            <span className="flex gap-4">
-              <Link className="text-lg font-semibold" href="/registration">
-                <button className="bg-orange-800 text-white px-4 py-2 rounded hover:bg-orange-600">
-                  Sin Up
-                </button>
-              </Link>
-            </span>
-          </div>
+          {
+            // navbar authenticate
+            <AuthNav />
+          }
         </div>
 
         <div className="menu-items">
           <div className="flex">
-            {navItems.map((item: any) => (
+            {navItems?.map((item: any) => (
               <Link
                 key={item.name}
                 href={`/category/${item.slug}`}

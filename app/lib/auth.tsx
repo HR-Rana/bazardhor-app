@@ -1,17 +1,33 @@
 import { betterAuth } from "better-auth";
 import { MongoClient } from "mongodb";
 import { mongodbAdapter } from "@better-auth/mongo-adapter";
+import dns from "node:dns/promises";
+dns.setServers(["1.1.1.1", "8.8.8.8"]);
 
-const client = new MongoClient(
-  process.env.BETTER_AUTH_DATABASE_URL || "mongodb://localhost:27017",
-);
+const connectionString = process.env.BETTER_AUTH_DATABASE_URL;
+
+if (!connectionString) {
+  throw new Error("BETTER_AUTH_DATABASE_URL is missing from .env");
+}
+
+const client = new MongoClient(connectionString);
 const db = client.db("users");
+
+console.log("Starting MongoDB connection...");
+
+try {
+  await client.connect();
+  await db.command({ ping: 1 });
+
+  console.log("✅ MongoDB connected successfully!");
+} catch (error) {
+  console.error("❌ MongoDB connection failed:", error);
+  throw error;
+}
 
 export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
   },
-  database: mongodbAdapter(db, {
-    client,
-  }),
+  database: mongodbAdapter(db, { client }),
 });

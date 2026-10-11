@@ -2,6 +2,7 @@ import React from "react";
 import img from "@/app/img/bazar-hero.png";
 import Image from "next/image";
 import BanglaDate from "../banglaDate/banglaDate";
+import Link from "next/link";
 
 export default function HeroSection() {
   return (
@@ -18,8 +19,11 @@ export default function HeroSection() {
             বিস্তারিত, গড়, সর্বনিম্ন-সর্বাধিক এবং দামের পরিবর্তন এক জায়গায়।
           </p>
 
-          <button className="bg-green-600 mt-4 font-semibold text-white px-4 py-2 rounded cursor-pointer hover:bg-green-700">
-            সব পণ্য দেখুন
+          <button
+            
+            className="bg-green-600 mt-4 font-semibold text-white px-4 py-2 rounded cursor-pointer hover:bg-green-700"
+          >
+            <Link href={"#allProducts"}>সব পণ্য দেখুন</Link>
           </button>
         </div>
         <div className="img w-full lg:w-1/2 flex justify-center items-center">
