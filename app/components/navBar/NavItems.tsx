@@ -42,7 +42,7 @@ export default async function NavItems() {
               <Image src={logo} width={30} className="text-2xl" alt="logo" />
             </span>
             <div>
-              <h1 className="text-[]16pxm d:text-2xl font-bold">
+              <h1 className="text-[16px] md:text-2xl font-bold">
                 <Link href={"/"}>BazarDhor</Link>
               </h1>
               <p className="text-[11px]">

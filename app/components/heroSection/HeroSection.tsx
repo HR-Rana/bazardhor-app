@@ -13,16 +13,15 @@ export default function HeroSection() {
             <BanglaDate />
           </span>
 
-          <h3 className="text-4xl mt-3 font-bold">আজকের বাজারের দাম এক নজরে</h3>
+          <h3 className="text-[26px] md:text-4xl mt-7 md:mt-3 font-bold">
+            আজকের বাজারের দাম এক নজরে
+          </h3>
           <p className="my-7">
             চাল, ডাল, তেল, সবজি, মাছ, মাংস, ডিম ও মসলার দাম — বাজারভিত্তিক
             বিস্তারিত, গড়, সর্বনিম্ন-সর্বাধিক এবং দামের পরিবর্তন এক জায়গায়।
           </p>
 
-          <button
-            
-            className="bg-green-600 mt-4 font-semibold text-white px-4 py-2 rounded cursor-pointer hover:bg-green-700"
-          >
+          <button className="bg-green-600 mt-4 font-semibold text-white px-4 py-2 rounded cursor-pointer hover:bg-green-700">
             <Link href={"#allProducts"}>সব পণ্য দেখুন</Link>
           </button>
         </div>

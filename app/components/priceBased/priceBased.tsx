@@ -43,14 +43,14 @@ export default async function PriceBased() {
                 </div>
                 <br />
                 <div className="flex justify-between items-center">
-                  <p className="text-gray-600">
+                  <h4 className="text-gray-600">
                     <p className="text-sm">আজকের দাম</p>
                     <span className="font-bold text-2xl">
                       {" "}
                       {product.today}
                     </span>{" "}
                     টাকা
-                  </p>
+                  </h4>
                   <p>
                     <p className="text-sm bg-gray-100 rounded-2xl py-2 px-2 text-red-500 font-semibold">
                       ▲ {product.change.pct} %

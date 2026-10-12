@@ -30,7 +30,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <div className="navigation-area bg-white">
           <NavItems />
         </div>
-        {children}
+        <div className="p-2 md:p-0">{children}</div>
         <footer className="bg-white ">
           <Footer />
         </footer>
