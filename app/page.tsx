@@ -18,7 +18,7 @@ export const getAllData = async () => {
 
 export default async function Home() {
   return (
-    <main className="container mx-auto">
+    <main className="container mx-auto p-2 md:p-0">
       <section className="hero-section">
         <HeroSection />
       </section>

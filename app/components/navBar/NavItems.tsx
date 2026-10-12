@@ -42,10 +42,10 @@ export default async function NavItems() {
               <Image src={logo} width={30} className="text-2xl" alt="logo" />
             </span>
             <div>
-              <h1 className="text-2xl font-bold">
+              <h1 className="text-[]16pxm d:text-2xl font-bold">
                 <Link href={"/"}>BazarDhor</Link>
               </h1>
-              <p>
+              <p className="text-[11px]">
                 <BanglaDate />
               </p>
             </div>
@@ -56,8 +56,8 @@ export default async function NavItems() {
           }
         </div>
 
-        <div className="menu-items">
-          <div className="flex">
+        <div className="menu-items overflow-x-auto">
+          <div className="flex min-w-[750px]">
             {navItems?.map((item: any) => (
               <Link
                 key={item.name}

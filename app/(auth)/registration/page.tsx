@@ -52,6 +52,73 @@ export default function RegistrationPage() {
     }
   };
 
+  const hanldeSignInuser = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+
+    const email = String(formData.get("email") ?? "");
+    const password = String(formData.get("password") ?? "");
+
+    try {
+      const { data, error } = await authClient.signIn.email({
+        email,
+        password,
+        callbackURL: "/",
+      });
+
+      if (error) {
+        toast.error(error.message);
+        return;
+      }
+
+      if (data.url) {
+        toast.success("Login successful!");
+        window.location.href = "/profile";
+      }
+    } catch (error) {
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Login failed. Please try again.",
+      );
+    }
+  };
+
+  const handleGoogleSignIn = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const result = await authClient.signIn.social({
+        provider: "google",
+      });
+
+      if (result?.data?.redirect) {
+        console.log(result);
+        toast.success("google signin successfull");
+      }
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : "Something went wrong!",
+      );
+    }
+  };
+
+  const handleGithubLogin = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const result = await authClient.signIn.social({
+        provider: "github",
+      });
+
+      if (result) {
+        toast.success("github signin successfull");
+      }
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : "Something went wrong!",
+      );
+    }
+  };
+
   return (
     <main>
       <div className="page-title w-1/2 mx-auto text-center mt-10">
@@ -60,7 +127,7 @@ export default function RegistrationPage() {
           বিনা খরচে সাইন আপ করে সব বিস্তারিত দাম দেখুন।
         </p>
       </div>
-      <div className="form-div-container w-1/3 mx-auto  bg-white shadow-sm shadow-gray-600 my-10 rounded-2xl py-10 text-black px-7">
+      <div className="form-div-container w-full  lg:w-1/3 mx-auto  bg-white shadow-sm shadow-gray-600 my-10 rounded-2xl py-10 text-black px-7">
         <Form
           className="flex  w-full flex-col text-black gap-8"
           render={(props) => <form {...props} data-custom="foo" />}
@@ -149,8 +216,12 @@ export default function RegistrationPage() {
           </p>
         </div>
         <div className="others-option text-center">
-          <div className="flex gap-2 mx-auto justify-center my-5">
-            <Button className="bg-transparent rounded-lg text-black  border-[1px] border-gray-500 font-semibold">
+          <div className="block gap-2 md:flex md:gap-2 mx-auto justify-center my-5">
+            <Button
+              type="submit"
+              onClick={handleGoogleSignIn}
+              className="bg-transparent rounded-lg text-black  border-[1px] border-gray-500 font-semibold"
+            >
               <svg
                 viewBox="0 0 24 24"
                 width="1em"
@@ -176,7 +247,10 @@ export default function RegistrationPage() {
               </svg>{" "}
               Google দিয়ে চালিয়ে যান
             </Button>
-            <Button className="bg-transparent rounded-lg text-black border-[1px] border-gray-500 font-semibold">
+            <Button
+              onClick={handleGithubLogin}
+              className="bg-transparent rounded-lg text-black border-[1px] border-gray-500 font-semibold"
+            >
               <svg
                 aria-hidden="true"
                 viewBox="0 0 24 24"

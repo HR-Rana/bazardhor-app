@@ -27,7 +27,7 @@ export default function ProfileIcon() {
       <Dropdown>
         <Button aria-label="Menu" variant="secondary">
           <div className="profile-icon flex gap-1 items-center">
-            <span>
+            <span className="w-[25px] md:w-fit">
               {user?.image ? (
                 <Image
                   src={user?.image}

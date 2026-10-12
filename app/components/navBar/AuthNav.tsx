@@ -15,7 +15,7 @@ export default function AuthNav() {
       {user ? (
         <ProfileIcon />
       ) : (
-        <div className="right-content flex gap-3">
+        <div className="right-content block md:flex gap-3">
           <Link
             href="/login"
             className="border border-gray-400 text-black px-4 py-2 rounded hover:bg-green-600"

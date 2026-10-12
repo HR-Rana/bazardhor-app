@@ -90,7 +90,7 @@ export default function LoginPage() {
           বিস্তারিত দাম, বাজার তুলনা ও প্রোফাইল দেখতে অ্যাকাউন্টে ঢুকুন।
         </p>
       </div>
-      <div className="form-div-container w-1/3 mx-auto  bg-white shadow-sm shadow-gray-600 my-10 rounded-2xl py-10 text-black px-7">
+      <div className="form-div-container w-full lg:w-1/3 mx-auto  bg-white shadow-sm shadow-gray-600 my-10 rounded-2xl py-10 text-black px-7">
         <form
           className="flex  w-full flex-col text-black gap-8"
           render={(props) => <form {...props} data-custom="foo" />}
@@ -151,7 +151,7 @@ export default function LoginPage() {
           </p>
         </div>
         <div className="others-option text-center">
-          <div className="flex gap-2 mx-auto justify-center my-5">
+          <div className="block gap-2 md:flex md:gap-2 mx-auto justify-center my-5">
             <Button
               type="submit"
               onClick={handleGoogleSignIn}
