@@ -2,14 +2,12 @@
 import Image from "next/image";
 import { toast } from "react-toastify";
 import { authClient } from "../lib/auth-client";
-import { useRouter } from "next/router";
 
 export default function ProfilePage() {
-  const { data: seission } = authClient.useSession();
-  const data = seission?.user;
+  const { data: session } = authClient.useSession();
+  const data = session?.user;
 
-  const HandleSignoUt = async (e) => {
-    e.preventDefault();
+  const HandleSignoUt = async () => {
     try {
       const result = await authClient.signOut();
 
@@ -59,7 +57,7 @@ export default function ProfilePage() {
                   </svg>
                 ) : (
                   <Image
-                    src={data?.image}
+                    src={data.image || "/default-avatar.png"}
                     width={30}
                     height={25}
                     alt="user-image"

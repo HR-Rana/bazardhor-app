@@ -13,6 +13,7 @@ import {
 import Link from "next/link";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { type FormEvent } from "react";
 
 export default function RegistrationPage() {
   const router = useRouter();
@@ -83,17 +84,15 @@ export default function RegistrationPage() {
       );
     }
   };
-
-  const handleGoogleSignIn = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleGoogleSignIn = async () => {
     try {
-      const result = await authClient.signIn.social({
+      const { error } = await authClient.signIn.social({
         provider: "google",
+        callbackURL: "/profile",
       });
 
-      if (result?.data?.redirect) {
-        console.log(result);
-        toast.success("google signin successfull");
+      if (error) {
+        toast.error(error.message || "Google login failed!");
       }
     } catch (error) {
       toast.error(
@@ -102,15 +101,15 @@ export default function RegistrationPage() {
     }
   };
 
-  const handleGithubLogin = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleGithubLogin = async () => {
     try {
-      const result = await authClient.signIn.social({
+      const { error } = await authClient.signIn.social({
         provider: "github",
+        callbackURL: "/profile",
       });
 
-      if (result) {
-        toast.success("github signin successfull");
+      if (error) {
+        toast.error(error.message || "GitHub login failed!");
       }
     } catch (error) {
       toast.error(
@@ -118,7 +117,6 @@ export default function RegistrationPage() {
       );
     }
   };
-
   return (
     <main>
       <div className="page-title w-1/2 mx-auto text-center mt-10">
@@ -130,7 +128,6 @@ export default function RegistrationPage() {
       <div className="form-div-container w-full  lg:w-1/3 mx-auto  bg-white shadow-sm shadow-gray-600 my-10 rounded-2xl py-10 text-black px-7">
         <Form
           className="flex  w-full flex-col text-black gap-8"
-          render={(props) => <form {...props} data-custom="foo" />}
           onSubmit={onSubmit}
         >
           <TextField isRequired name="name" type="text">
@@ -218,7 +215,7 @@ export default function RegistrationPage() {
         <div className="others-option text-center">
           <div className="block gap-2 md:flex md:gap-2 mx-auto justify-center my-5">
             <Button
-              type="submit"
+              type="button"
               onClick={handleGoogleSignIn}
               className="bg-transparent rounded-lg text-black  border-[1px] border-gray-500 font-semibold"
             >
