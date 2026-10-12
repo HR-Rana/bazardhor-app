@@ -6,12 +6,12 @@ import {
   Button,
   Description,
   FieldError,
-  Form,
   Input,
   Label,
   TextField,
 } from "@heroui/react";
 import Link from "next/link";
+import { FormEvent } from "react";
 import { toast } from "react-toastify";
 
 export default function LoginPage() {
@@ -28,14 +28,13 @@ export default function LoginPage() {
         password,
         callbackURL: "/",
       });
-      console.log(data);
 
       if (error) {
         toast.error(error.message);
         return;
       }
 
-      if (data) {
+      if (data.url) {
         toast.success("Login successful!");
         window.location.href = "/profile";
       }
@@ -48,14 +47,33 @@ export default function LoginPage() {
     }
   };
 
-  const handleGoogleSignIn = async () => {
+  const handleGoogleSignIn = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     try {
       const result = await authClient.signIn.social({
         provider: "google",
       });
 
-      if (result) {
+      if (result?.data?.redirect) {
+        console.log(result);
         toast.success("google signin successfull");
+      }
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : "Something went wrong!",
+      );
+    }
+  };
+
+  const handleGithubLogin = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const result = await authClient.signIn.social({
+        provider: "github",
+      });
+
+      if (result) {
+        toast.success("github signin successfull");
       }
     } catch (error) {
       toast.error(
@@ -73,7 +91,7 @@ export default function LoginPage() {
         </p>
       </div>
       <div className="form-div-container w-1/3 mx-auto  bg-white shadow-sm shadow-gray-600 my-10 rounded-2xl py-10 text-black px-7">
-        <Form
+        <form
           className="flex  w-full flex-col text-black gap-8"
           render={(props) => <form {...props} data-custom="foo" />}
           onSubmit={hanldeSignInuser}
@@ -126,7 +144,7 @@ export default function LoginPage() {
               সাইন ইন
             </Button>
           </div>
-        </Form>
+        </form>
         <div className="or border-t-[1px] my-7 border-gray-300 relative">
           <p className="absolute top-[-21] left-[40%] bg-white rounded-full p-3 left-{50%}">
             অথবা
@@ -135,6 +153,7 @@ export default function LoginPage() {
         <div className="others-option text-center">
           <div className="flex gap-2 mx-auto justify-center my-5">
             <Button
+              type="submit"
               onClick={handleGoogleSignIn}
               className="bg-transparent rounded-lg text-black  border-[1px] border-gray-500 font-semibold"
             >
@@ -163,7 +182,10 @@ export default function LoginPage() {
               </svg>{" "}
               Google দিয়ে চালিয়ে যান
             </Button>
-            <Button className="bg-transparent rounded-lg text-black border-[1px] border-gray-500 font-semibold">
+            <Button
+              onClick={handleGithubLogin}
+              className="bg-transparent rounded-lg text-black border-[1px] border-gray-500 font-semibold"
+            >
               <svg
                 aria-hidden="true"
                 viewBox="0 0 24 24"

@@ -5,7 +5,11 @@ import { authClient } from "../lib/auth-client";
 import { useRouter } from "next/router";
 
 export default function ProfilePage() {
-  const HandleSignoUt = async () => {
+  const { data: seission } = authClient.useSession();
+  const data = seission?.user;
+
+  const HandleSignoUt = async (e) => {
+    e.preventDefault();
     try {
       const result = await authClient.signOut();
 
@@ -35,30 +39,38 @@ export default function ProfilePage() {
           </div>
           <div className="profile-info bg-white py-7 px-6 rounded-lg flex justify-between">
             <div className="left flex items-center ">
-              <span>
-                {" "}
-                <svg
-                  aria-hidden="true"
-                  fill="none"
-                  focusable="false"
-                  height={40}
-                  role="presentation"
-                  viewBox="0 0 24 24"
-                  width={60}
-                  stroke="currentColor"
-                  strokeWidth={1.5}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
-                  <circle cx="12" cy="7" r="4" />
-                </svg>
-                {/* <Image src={""} alt="user-image"></Image> */}
+              <span className="flex gap-2">
+                {!data ? (
+                  <svg
+                    aria-hidden="true"
+                    fill="none"
+                    focusable="false"
+                    height={40}
+                    role="presentation"
+                    viewBox="0 0 24 24"
+                    width={60}
+                    stroke="currentColor"
+                    strokeWidth={1.5}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                  </svg>
+                ) : (
+                  <Image
+                    src={data?.image}
+                    width={30}
+                    height={25}
+                    alt="user-image"
+                    className="mr-4"
+                  ></Image>
+                )}
               </span>
               <div>
-                <h3 className="text-[24px] font-bold ">Name of User</h3>
+                <h3 className="text-[24px] font-bold ">{data?.name}</h3>
                 <p className="text-[14px] font-semibold text-gray-500">
-                  rezwanahmed@gmail.com
+                  {data?.email}
                 </p>
               </div>
             </div>

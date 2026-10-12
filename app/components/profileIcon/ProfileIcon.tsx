@@ -12,7 +12,7 @@ export default function ProfileIcon() {
   const HandleSignoUt = async () => {
     try {
       await authClient.signOut();
-
+      window.location.href = "/";
       toast.success("User Sign Out successfully..!");
     } catch (error) {
       const message =
@@ -29,7 +29,12 @@ export default function ProfileIcon() {
           <div className="profile-icon flex gap-1 items-center">
             <span>
               {user?.image ? (
-                <Image src={user?.image} alt="profile-img"></Image>
+                <Image
+                  src={user?.image}
+                  width={30}
+                  height={20}
+                  alt="profile-img"
+                ></Image>
               ) : (
                 <svg
                   className="font-bold text-black text-md"
